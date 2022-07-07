@@ -68,7 +68,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Iterations: 20
+    - _Iterations: 11.9
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -80,7 +80,7 @@ Material:
     - _StepSize: 130
     - _Tile: 730
     - _UVSec: 0
-    - _Volsteps: 30.2
+    - _Volsteps: 25.5
     - _ZWrite: 1
     - _Zoom: 800
     m_Colors:
