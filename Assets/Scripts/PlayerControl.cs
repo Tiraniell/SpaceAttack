@@ -2,57 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+namespace SpaceAttack
 {
-    [SerializeField] float speed = 5;
-   
-    //Реализуем метод перемещения по оси координат
-     void PlayerControler()
-    {       
-        float horizonInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizonInput);
-
-        float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
-
-        GameField();
-    }
-
-    // Реализуем метод ограничения игрового простанства
-    void GameField()
+    public class PlayerControl : MonoBehaviour
     {
-        if (speed <= 0)
+        public GameObject laserPrefab;
+
+        private  float fireRate = 0.3f;
+        private float nextFire;
+
+        [SerializeField] float speed = 5;
+
+        //Реализуем метод перемещения по оси координат
+        void PlayerControler()
         {
-            Debug.Log("Wrong value, please try again");
+            float horizonInput = Input.GetAxis("Horizontal");
+            transform.Translate(Vector3.right * Time.deltaTime * speed * horizonInput);
+
+            float verticalInput = Input.GetAxis("Vertical");
+            transform.Translate(Vector3.up * Time.deltaTime * speed * verticalInput);
+
+            GameField();
         }
 
-        if (transform.position.y > 12.8f)
+        // Реализуем метод ограничения игрового простанства
+        void GameField()
         {
-            transform.position = new Vector3(transform.position.x, 12.8f, 0);
-        }
-        else if (transform.position.y < -12.8f)
-        {
-            transform.position = new Vector3(transform.position.x, -12.8f, 0);
+            if (speed <= 0)
+            {
+                Debug.Log("Wrong value, please try again");
+            }
+
+            if (transform.position.y > 12.8f)
+            {
+                transform.position = new Vector3(transform.position.x, 12.8f, 0);
+            }
+            else if (transform.position.y < -12.8f)
+            {
+                transform.position = new Vector3(transform.position.x, -12.8f, 0);
+            }
+
+            if (transform.position.x > 24.8f)
+            {
+                transform.position = new Vector3(24.8f, transform.position.y, 0);
+            }
+            else if (transform.position.x < -24.8f)
+            {
+                transform.position = new Vector3(-24.8f, transform.position.y, 0);
+            }
         }
 
-        if (transform.position.x > 24.8f)
-        {
-            transform.position = new Vector3( 24.8f, transform.position.y, 0);
+        void Start()
+        { //Устанавливаем обьект в начальные координаты
+            transform.position = new Vector3(0, -12, 0);
         }
-        else if (transform.position.x < -24.8f)
+
+
+        void Update()
         {
-            transform.position = new Vector3(-24.8f, transform.position.y, 0);
+            PlayerControler();
+            Fire();
+            
         }
-    }
 
-    void Start()
-    { //Устанавливаем обьект в начальные координаты
-        transform.position = new Vector3(0, -12, 0);
-    }
+        
 
-   
-    void Update()
-    {
-        PlayerControler();
+        void Fire()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (Time.time > nextFire)
+                {
+                    Instantiate(laserPrefab, transform.position + new Vector3(0, 3f, 0), Quaternion.identity);
+                    nextFire = Time.time + fireRate;
+                }
+               
+            }
+
+        }
     }
 }
