@@ -2,32 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserControlls : MonoBehaviour
+namespace SpaceAttack
 {
-    public int laserSpeed = 6;  
-    
-    void laserAtack()
-    {
-        transform.Translate(Vector3.up* laserSpeed * Time.deltaTime);
-    }
 
-    void DestroyMyLiser()
+    public class LaserControlls : MonoBehaviour
     {
-        if (transform.position.y >= 16)
+        private int laserSpeed = 6;
+
+        void laserAtack()
         {
-            Destroy(this.gameObject, 0.5f);
+            transform.Translate(Vector3.up * laserSpeed * Time.deltaTime);
         }
-    }
 
-    void Start()
-    {
-        
-    }
+        void DestroyMyLiser()
+        {
+            if (transform.position.y >= 16)
+            {
+                Destroy(this.gameObject, 0.5f);
+            }
+        }
 
-    
-    void Update()
-    {
-        laserAtack();
-        DestroyMyLiser();
+        void Start()
+        {
+
+        }
+
+
+        void Update()
+        {
+            laserAtack();
+            DestroyMyLiser();
+        }
     }
 }

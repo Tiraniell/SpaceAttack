@@ -11,6 +11,8 @@ namespace SpaceAttack
         private  float fireRate = 0.3f;
         private float nextFire;
 
+        private int playerLives = 5;
+
         [SerializeField] float speed = 5;
 
         //Реализуем метод перемещения по оси координат
@@ -63,6 +65,16 @@ namespace SpaceAttack
             PlayerControler();
             Fire();
             
+        }
+
+        public void LifeSubstraction()
+        {
+            playerLives--;
+
+            if (playerLives < 1)
+            {
+                Destroy(this.gameObject);
+            }
         }
 
         
