@@ -8,6 +8,13 @@ namespace SpaceAttack {
     {
         private int speed = 7;
 
+        [SerializeField]
+        private GameObject enemyExposionPrefab;
+
+        [SerializeField]
+        private AudioClip explosionSound;
+
+
         void EnemySpeed()
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
@@ -20,12 +27,7 @@ namespace SpaceAttack {
                 transform.position = new Vector3(Random.Range(-25.5f, 25.5f), 18f, 0);
             }
         }
-
-
-        void Start()
-        {
-
-        }
+     
 
         void Update()
         {
@@ -33,12 +35,15 @@ namespace SpaceAttack {
             EnemySpawnPoint();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag == "Laser")
             {
                 Destroy(collision.gameObject);
+                Instantiate(enemyExposionPrefab, transform.position, Quaternion.identity);
+                AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position, 1.0f);
                 Destroy(this.gameObject);
+
             }
 
             else if (collision.tag == "Player")
@@ -49,7 +54,8 @@ namespace SpaceAttack {
                 {
                     playerControl.LifeSubstraction();
                 }
-
+                Instantiate(enemyExposionPrefab, transform.position, Quaternion.identity);
+                AudioSource.PlayClipAtPoint(explosionSound, Camera.main.transform.position, 1.0f);
                 Destroy(this.gameObject);
             }
         }

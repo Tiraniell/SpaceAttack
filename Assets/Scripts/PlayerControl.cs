@@ -11,9 +11,17 @@ namespace SpaceAttack
         private  float fireRate = 0.3f;
         private float nextFire;
 
-        private int playerLives = 5;
+        [SerializeField]
+        private GameObject playerExplosionPrefab;
 
-        [SerializeField] float speed = 5;
+        [SerializeField]
+        private int playerLives = 3;
+
+        [SerializeField] 
+        float speed = 5;
+
+        [SerializeField]
+        private AudioSource laserShot;
 
         //Реализуем метод перемещения по оси координат
         void PlayerControler()
@@ -57,6 +65,8 @@ namespace SpaceAttack
         void Start()
         { //Устанавливаем обьект в начальные координаты
             transform.position = new Vector3(0, -12, 0);
+
+            laserShot = GetComponent<AudioSource>();
         }
 
 
@@ -73,6 +83,7 @@ namespace SpaceAttack
 
             if (playerLives < 1)
             {
+                Instantiate(playerExplosionPrefab, transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
             }
         }
@@ -85,6 +96,7 @@ namespace SpaceAttack
             {
                 if (Time.time > nextFire)
                 {
+                    laserShot.Play();
                     Instantiate(laserPrefab, transform.position + new Vector3(0, 3f, 0), Quaternion.identity);
                     nextFire = Time.time + fireRate;
                 }

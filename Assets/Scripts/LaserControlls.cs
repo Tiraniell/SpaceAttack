@@ -7,7 +7,7 @@ namespace SpaceAttack
 
     public class LaserControlls : MonoBehaviour
     {
-        private int laserSpeed = 6;
+        private int laserSpeed = 10;
 
         void laserAtack()
         {
