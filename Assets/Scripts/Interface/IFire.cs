@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IFire 
+public interface IFire 
 {
-    void Fire()
-    {
-    }
+    void Fire();
+    
 }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 namespace SpaceAttack
@@ -38,10 +37,7 @@ namespace SpaceAttack
         // Реализуем метод ограничения игрового простанства
         void GameField()
         {
-            if (speed <= 0)
-            {
-                Debug.Log("Wrong value, please try again");
-            }
+            
 
             if (transform.position.y > 12.8f)
             {
@@ -85,6 +81,8 @@ namespace SpaceAttack
             {
                 Instantiate(playerExplosionPrefab, transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
+
+                SceneManager.LoadScene("GameOver");
             }
         }
 
